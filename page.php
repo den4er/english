@@ -4,7 +4,7 @@
 class Page{
 
 	public $content;		// свойство, в котором содержится контент страницы
-	public $title;		// свйство, в котором содержится title страницы
+	public $title;		// свойство, в котором содержится title страницы
 
 	public function __set($name, $value){	// сеттер для установки свойств объекта
 		$this->$name = $value;
@@ -46,12 +46,13 @@ class Page{
 
 	// метод вывода шапки сайта и навигации
 	public function DisplayHeader(){		
-
-		$firstLevel = '';
-		$secondLevel = '';
-		$thirdLevel = '';
-		$fourthLevel = '';
-		$original = '';
+	
+	// отображение в наигации текущего уровня	
+	$firstLevel = '';
+	$secondLevel = '';
+	$thirdLevel = '';
+	$fourthLevel = '';
+	$original = '';
 
         switch($this->title){
             case 'Первый уровень':
