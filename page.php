@@ -119,7 +119,7 @@ class Page{
 		    
 		    
 		// подсказка при наведении на иконку домой
-		$('#main').mouseover(function(e){
+		$('#main').mouseover(function(){
 		        
                 var $data = $(this).attr('data');
                 var $this = $(this);
@@ -131,7 +131,6 @@ class Page{
 				'top': $this.offset().top + $this.outerHeight(),
 				'left': $this.offset().left + $this.outerWidth()
 			})
-			.stop(true, true)
 			.slideDown(200);
 			        
 	        }).mouseout(function(){
@@ -141,7 +140,7 @@ class Page{
 	        });
 	        
 	        // подсказка при наведении на иконку faq
-	        $('#faq').mouseover(function(e){
+	        $('#faq').mouseover(function(){
 	            
 	            var $data = $(this).attr('data');
                 var $this = $(this);
