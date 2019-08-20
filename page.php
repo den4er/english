@@ -18,8 +18,8 @@ class Page{
 		echo "</head>\n<body>\n";
 		$this->DisplayHeader();
 		echo $this->content;
-		$this->DisplayScript();
 		$this->DisplayFooter();
+		$this->DisplayScript();
 		echo "</body>\n</html>\n";
 	}
 
@@ -99,23 +99,67 @@ class Page{
 		
 		<script type="text/javascript">
 		    
-		    //аккордеон по главам книг
-		    var parent = $('#book h3');
+		//аккордеон по главам книг
+		var parent = $('#book h3');
 		    
-		    parent.attr('title', 'Нажми меня');
-		    parent.css({
-		        background: '#d9d9d9',
-		        margin: '8px',
-		        borderRadius: '5px',
-		        cursor: 'pointer'
-		    });
-		    $('#book').css({
-		        padding: '5px'
-		    });
-		    parent.next().slideUp();
-		    parent.click(function(){
-		       $(this).next().slideToggle(1000);
-		    });
+		parent.attr('title', 'Нажми меня');
+		parent.css({
+		    background: '#d9d9d9',
+		    margin: '8px',
+		    borderRadius: '5px',
+		    cursor: 'pointer'
+		});
+		$('#book').css({
+		    padding: '5px'
+		});
+		parent.next().slideUp();
+		parent.click(function(){
+		   $(this).next().stop().slideToggle(1000);
+		});
+		    
+		    
+		// подсказка при наведении на иконку домой
+		$('#main').mouseover(function(e){
+		        
+                var $data = $(this).attr('data');
+                var $this = $(this);
+                
+                clearTimeout($.data(this, 'timer'));
+		    $('#main_help')
+			.text($data)
+			.css({
+				'top': $this.offset().top + $this.outerHeight(),
+				'left': $this.offset().left + $this.outerWidth()
+			})
+			.stop(true, true)
+			.slideDown(200);
+			        
+	        }).mouseout(function(){
+	            $.data(this, 'timer', setTimeout($.proxy(function(){
+		            $('#main_help').stop(true, true).slideUp(200);
+	            }, this), 300));
+	        });
+	        
+	        // подсказка при наведении на иконку faq
+	        $('#faq').mouseover(function(e){
+	            
+	            var $data = $(this).attr('data');
+                var $this = $(this);
+                
+                clearTimeout($.data(this, 'timer'));
+	            $('#faq_help')
+	                .text($data)
+	                .css({
+				'top': $this.offset().top+ $this.outerHeight(),
+				'left': $this.offset().left - $this.outerWidth()	                    
+	                })
+	                .slideDown(200);
+	                
+	        }).mouseout(function(){
+	           $.data(this, 'timer', setTimeout($.proxy(function(){ 
+	               $('#faq_help').slideUp(200); 
+	           }, this), 300));
+	        });
 			
 		</script>
 		
