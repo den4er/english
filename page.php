@@ -98,46 +98,103 @@ class Page{
 		?>	
 		
 		<script type="text/javascript">
+		
+		    // изменение стилей элементов с произведениями при наведении
+		    $('.content').hover(
+		        function(){
+		            
+		            $(this).css({
+		               'box-shadow' : 'none'
+		            });
+		            
+		            $(this).children('.image').css({
+		                opacity: 1
+		            });
+		            
+		            $(this).children(".description").css({
+                        "color": "red",
+                    });
+		        },
+		        function(){
+		            
+		            $(this).css({
+		               'box-shadow' : '0 0 10px rgba(0,0,0,0.5)'
+		            });	
+		            
+		            $(this).children('.image').css({
+		                opacity: 0.85
+		            });
+		            
+		            $(this).children('.description').css({
+		                'color' : 'black'
+		            });
+		        }
+		    );
+		
+		    // выпадающее меню
+            $('#navigation li').hover(
+            
+            	function(){ // наведение мыши
+            
+                clearTimeout($.data(this, 'timer'));
+            		$('ul', this).stop().slideDown(200);
+            		
+            	},	
+            
+            	function(){	// уход мыши
+            
+                $.data(this, 'timer', setTimeout($.proxy(function(){
+                  $('ul', this).stop().slideUp(200);
+                }, this), 200));
+            		
+            	}	
+            
+            );		
 		    
-		//аккордеон по главам книг
-		var parent = $('#book h3');
-		    
-		parent.attr('title', 'Нажми меня');
-		parent.css({
-		    background: '#d9d9d9',
-		    margin: '8px',
-		    borderRadius: '5px',
-		    cursor: 'pointer'
-		});
-		$('#book').css({
-		    padding: '5px'
-		});
-		parent.next().slideUp();
-		parent.click(function(){
-		   $(this).next().stop().slideToggle(1000);
-		});
 		    
 		    
-		// подсказка при наведении на иконку домой
-		$('#main').mouseover(function(){
+		    //аккордеон по главам книг
+		    var parent = $('#book h3');
+		    
+		    parent.attr('title', 'Нажми меня');
+		    parent.css({
+		        background: '#d9d9d9',
+		        margin: '8px',
+		        borderRadius: '5px',
+		        cursor: 'pointer'
+		    });
+		    $('#book').css({
+		        padding: '5px'
+		    });
+		    parent.next().slideUp();
+		    parent.click(function(){
+		       $(this).next().stop().slideToggle(1000);
+		    });
+		    
+		    
+		    
+		    // подсказка при наведении на иконку домой
+		    $('#main').mouseover(function(){
 		        
                 var $data = $(this).attr('data');
                 var $this = $(this);
                 
                 clearTimeout($.data(this, 'timer'));
-		    $('#main_help')
-			.text($data)
-			.css({
-				'top': $this.offset().top + $this.outerHeight(),
-				'left': $this.offset().left + $this.outerWidth()
-			})
-			.slideDown(200);
+		        $('#main_help')
+			        .text($data)
+			        .css({
+				        'top': $this.offset().top + $this.outerHeight(),
+				        'left': $this.offset().left + $this.outerWidth()
+			        })
+			        .slideDown(200);
 			        
 	        }).mouseout(function(){
 	            $.data(this, 'timer', setTimeout($.proxy(function(){
 		            $('#main_help').stop(true, true).slideUp(200);
 	            }, this), 300));
 	        });
+	        
+	        
 	        
 	        // подсказка при наведении на иконку faq
 	        $('#faq').mouseover(function(){
@@ -149,8 +206,8 @@ class Page{
 	            $('#faq_help')
 	                .text($data)
 	                .css({
-				'top': $this.offset().top+ $this.outerHeight(),
-				'left': $this.offset().left - $this.outerWidth()	                    
+				        'top': $this.offset().top+ $this.outerHeight(),
+				        'left': $this.offset().left - $this.outerWidth()	                    
 	                })
 	                .slideDown(200);
 	                
@@ -159,6 +216,37 @@ class Page{
 	               $('#faq_help').slideUp(200); 
 	           }, this), 300));
 	        });
+	        
+	        
+	        
+	        // слайдер
+	        var slideWidth = 1050; // ширина одного слайда
+            var slideTimer; // интервал смены кадров
+
+            // устанавливаем ширину списка картинок умножением количества картинок на их ширину
+            $('.slidewrapper').width($('.slidewrapper').children().length * slideWidth);
+            
+            // задаем временной интервал
+            slideTimer = setInterval(nextSlide, 5000);
+        
+            // функция, которая сменяет слайды
+            function nextSlide(){
+              var currentSlide = parseInt($('.slidewrapper').data('current'));
+              currentSlide++;
+              if(currentSlide >= $('.slidewrapper').children().length){
+                currentSlide = 0;
+              }
+              $('.slidewrapper').animate({left: - currentSlide * slideWidth}, 1000).data('current', currentSlide);
+            }
+        
+            // остановка слайдера при наведении мыши
+            $('.viewport').hover(
+              function(){
+                clearInterval(slideTimer);
+            },
+              function(){
+                slideTimer = setInterval(nextSlide, 5000);
+            });
 			
 		</script>
 		
