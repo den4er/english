@@ -270,7 +270,7 @@ class Page{
 	        	    <button>Отправить</button>
 	        	</div> 
 		        
-		        <a href="https://vk.com/id10657440"><h3>Басов Денис - 2019.</h3></a>
+		        <a href="https://vk.com/id10657440"><h3>Басов Денис - <?php echo date('Y'); ?></h3></a>
 		       
 		    </form>
 		</div>
